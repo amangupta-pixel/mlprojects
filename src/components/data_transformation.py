@@ -63,17 +63,19 @@ class DataTransformation:
         except Exception as e:
             raise CustomException(e, sys)
 
-    def initiate_data_transformation(self, train_path, test_path):
+        # Modified to accept DataFrames directly instead of file paths
+    def initiate_data_transformation(self, train_df_input: pd.DataFrame, test_df_input: pd.DataFrame):
         try:
             # Debug: Check paths
-            logging.info(f"Reading training data from: {train_path}")
-            logging.info(f"Reading testing data from: {test_path}")
+            # The inputs are now DataFrames
+            logging.info(f"Received training DataFrame. Shape: {train_df_input.shape if isinstance(train_df_input, pd.DataFrame) else 'Input is not a DataFrame'}")
+            logging.info(f"Received testing DataFrame. Shape: {test_df_input.shape if isinstance(test_df_input, pd.DataFrame) else 'Input is not a DataFrame'}")
 
             # Reading train and test data
-            train_df = pd.read_csv(train_path)
-            test_df = pd.read_csv(test_path)
+            train_df = train_df_input
+            test_df = test_df_input
 
-            logging.info("Read train and test data completed")
+            logging.info("Using provided train and test DataFrames.")
 
             # Obtaining preprocessing object
             preprocessing_obj = self.get_data_transformer_object()

@@ -7,8 +7,8 @@ from sklearn.model_selection import train_test_split
 from dataclasses import dataclass  # Used to create class vars
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
-# from src.components.model_trainer import ModelTrainerConfig
-# from src.components.model_trainer import ModelTrainer
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
 
 @dataclass
 class DataIngestionConfig:
@@ -43,21 +43,18 @@ class DataIngestion:
             test_set.to_csv(self.ingestion_config.test_data_path, index=False, header=True)
 
             logging.info("Ingestion of the data is completed")
-            return (
-                self.ingestion_config.train_data_path,
-                self.ingestion_config.test_data_path
-            ) 
-            # Return the dataframes, not the file paths
+            return train_set, test_set  # Return the dataframes, not the file paths
         
         except Exception as e:
-            raise CustomException(e,sys)
+            raise CustomException(f"Error in DataIngestion: {str(e)}", sys)
 
 if __name__ == "__main__":
     obj = DataIngestion()
     train_data, test_data = obj.initiate_data_ingestion()
 
     data_transformation = DataTransformation()
-    data_transformation.initiate_data_transformation(train_data, test_data)
+    # Ensure you unpack all three return values
+    train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data) # Added '_' to capture the third return value
 
-    # modeltrainer = ModelTrainer()
-    # print(modeltrainer.initiate_model_trainer(train_arr,test_arr))
+    modeltrainer = ModelTrainer()
+    print(modeltrainer.initiate_model_trainer(train_arr,test_arr))
