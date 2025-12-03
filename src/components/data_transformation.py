@@ -68,8 +68,10 @@ class DataTransformation:
         try:
             # Debug: Check paths
             # The inputs are now DataFrames
-            logging.info(f"Received training DataFrame. Shape: {train_df_input.shape if isinstance(train_df_input, pd.DataFrame) else 'Input is not a DataFrame'}")
-            logging.info(f"Received testing DataFrame. Shape: {test_df_input.shape if isinstance(test_df_input, pd.DataFrame) else 'Input is not a DataFrame'}")
+            logging.info
+            (f"Received training DataFrame. Shape: {train_df_input.shape if isinstance(train_df_input, pd.DataFrame) else 'Input is not a DataFrame'}")
+            logging.info
+            (f"Received testing DataFrame. Shape: {test_df_input.shape if isinstance(test_df_input, pd.DataFrame) else 'Input is not a DataFrame'}")
 
             # Reading train and test data
             train_df = train_df_input
